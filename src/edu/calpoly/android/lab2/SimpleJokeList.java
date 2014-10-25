@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.util.Log;
+import android.widget.*;
 
 public class SimpleJokeList extends Activity {
 
@@ -28,13 +27,21 @@ public class SimpleJokeList extends Activity {
 	 * of Jokes. */
 	protected int m_nDarkColor;
 	protected int m_nLightColor;
+    protected int m_nTextColor;
+
+    protected boolean darkUsed = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        initLayout();
         Resources resources = this.getResources();
         m_arrJokeList = new ArrayList<Joke>();
+        m_nDarkColor = resources.getColor(R.color.dark);
+        m_nLightColor = resources.getColor(R.color.light);
+        m_nTextColor = resources.getColor(R.color.text);
         for (String s : resources.getStringArray(R.array.jokeList)) {
+            Log.d("Lab2Sean", "Adding new joke: " + s);
             addJoke(s);
         }
 	}
@@ -44,7 +51,11 @@ public class SimpleJokeList extends Activity {
 	 * for this Activity. 
 	 */
 	protected void initLayout() {
-		// TODO
+        m_vwJokeLayout = new LinearLayout(this);
+        m_vwJokeLayout.setOrientation(LinearLayout.VERTICAL);
+        ScrollView sV = new ScrollView(this);
+        sV.addView(m_vwJokeLayout);
+        setContentView(sV);
 	}
 	
 	/**
@@ -64,6 +75,17 @@ public class SimpleJokeList extends Activity {
 	 *            A string containing the text of the Joke to add.
 	 */
 	protected void addJoke(String strJoke) {
-		// TODO
+        TextView tV = new TextView(this);
+        tV.setText(strJoke);
+        tV.setTextSize(16);
+        tV.setTextColor(m_nTextColor);
+        if (darkUsed) {
+            tV.setBackgroundColor(m_nDarkColor);
+            darkUsed = false;
+        } else {
+            tV.setBackgroundColor(m_nLightColor);
+            darkUsed = true;
+        }
+        m_vwJokeLayout.addView(tV);
 	}
 }
