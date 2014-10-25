@@ -3,6 +3,7 @@ package edu.calpoly.android.lab2;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +32,11 @@ public class SimpleJokeList extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// TODO
+        Resources resources = this.getResources();
+        m_arrJokeList = new ArrayList<Joke>();
+        for (String s : resources.getStringArray(R.array.jokeList)) {
+            addJoke(s);
+        }
 	}
 	
 	/**

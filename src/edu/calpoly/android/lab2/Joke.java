@@ -22,7 +22,8 @@ public class Joke {
 	 * UNRATED.
 	 */
 	public Joke() {
-		//TODO
+		m_strJoke = "";
+        m_nRating = UNRATED;
 	}
 	
 	/**
@@ -33,7 +34,8 @@ public class Joke {
 	 * 						joke.
 	 */
 	public Joke(String strJoke) {
-		//TODO
+		m_strJoke = strJoke;
+        m_nRating = UNRATED;
 	}
 	
 	/**
@@ -45,7 +47,8 @@ public class Joke {
 	 * @param dLike	Rating value to initialize the rating of this joke.
 	 */
 	public Joke(String strJoke, int nRating) {
-		//TODO
+		m_strJoke = strJoke;
+        m_nRating = nRating;
 	}
 	
 	/**
@@ -54,8 +57,7 @@ public class Joke {
 	 * @return	A String value containing the text of this joke.
 	 */
 	public String getJoke() {
-		//TODO
-		return null;
+		return m_strJoke;
 	}
 
 	/**
@@ -64,7 +66,7 @@ public class Joke {
 	 * @param strJoke	The text of this joke.
 	 */
 	public void setJoke(String mstrJoke) {
-		//TODO
+		m_strJoke = mstrJoke;
 	}
 
 	/**
@@ -74,8 +76,7 @@ public class Joke {
 	 * 			rating constants.
 	 */
 	public int getRating() {
-		//TODO
-		return 0;
+		return m_nRating;
 	}
 	
 	/**
@@ -84,7 +85,7 @@ public class Joke {
 	 * @param rating	One of the possible rating constants.
 	 */
 	public void setRating(int rating) {
-		//TODO
+		m_nRating = rating;
 	}
 	
 	/**
@@ -94,8 +95,7 @@ public class Joke {
 	 */
 	@Override
 	public String toString() {
-		//TODO
-		return null;
+		return m_strJoke;
 	}
 	
 	/**
@@ -109,7 +109,6 @@ public class Joke {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		//TODO
-		return true;
+        return obj instanceof  Joke && this.toString().equals(obj.toString());
 	}
 }
