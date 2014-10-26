@@ -3,9 +3,13 @@ package edu.calpoly.android.lab2;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 
 public class SimpleJokeList extends Activity {
@@ -44,6 +48,7 @@ public class SimpleJokeList extends Activity {
             Log.d("Lab2Sean", "Adding new joke: " + s);
             addJoke(s);
         }
+        initAddJokeListeners();
 	}
 	
 	/**
@@ -51,11 +56,28 @@ public class SimpleJokeList extends Activity {
 	 * for this Activity. 
 	 */
 	protected void initLayout() {
+        LinearLayout viewGroup = new LinearLayout(this);
+        viewGroup.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout horizontalLayout = new LinearLayout(this);
+        horizontalLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+        m_vwJokeButton = new Button(this);
+        m_vwJokeButton.setText("Add Joke");
+        horizontalLayout.addView(m_vwJokeButton);
+
+        m_vwJokeEditText = new EditText(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        m_vwJokeEditText.setLayoutParams(params);
+        m_vwJokeEditText.setInputType(InputType.TYPE_CLASS_TEXT);
+        horizontalLayout.addView(m_vwJokeEditText);
+        viewGroup.addView(horizontalLayout);
+
         m_vwJokeLayout = new LinearLayout(this);
         m_vwJokeLayout.setOrientation(LinearLayout.VERTICAL);
         ScrollView sV = new ScrollView(this);
         sV.addView(m_vwJokeLayout);
-        setContentView(sV);
+        viewGroup.addView(sV);
+        setContentView(viewGroup);
 	}
 	
 	/**
@@ -64,6 +86,16 @@ public class SimpleJokeList extends Activity {
 	 * list. 
 	 */
 	protected void initAddJokeListeners() {
+		m_vwJokeButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                addJoke(m_vwJokeEditText.getText().toString());
+                m_vwJokeEditText.setText("");
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(m_vwJokeEditText.getWindowToken(), 0);
+            }
+        });
 		// TODO
 	}
 
